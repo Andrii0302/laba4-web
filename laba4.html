@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Хто придумав цю х#уйню?</title>
+    <script src="laba4js.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        #student-details {
+            text-align: center;
+            padding: 20px;
+        }
+        #task {
+            float: left;
+            width: 50%;
+            padding: 20px;
+        }
+        #code-button {
+            float: right;
+            width: 50%;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div id="student-details">
+        <h2>Student Details</h2>
+        <p>ПІБ студента: Дідук Андрій Васильович</p>
+        <p>Номер групи: ТР-24</p>
+        <p>Варіант: 5</p>
+    </div>
+    <div id="task">
+        <h2>Task Description</h2>
+        <p>1. Створити об’єкт «Факультет» з властивостями «Назва»,
+            «телефон».
+            2. Створити об’єкт «Група», що містить властивості
+            «Спеціальність», «Ширф», «Кількість студентів» і методи: додати,
+            змінити, видалити дані.
+            3. Реалізувати копіювання властивостей і методів об’єктів
+            «Факультет» і «Група».
+            4. Додати в прототип об’єкту «Група» метод «Показати дані»
+            5. Створити об’єкт «Сесія», що наслідує властивості і методи
+            об’єкту «Група» і має додаткові властивість «Відраховано» і метод
+            «Відсоток не відрахованих». Перевизначити в об’єкті
+            
+            «Успішність» метод «Показати дані».
+            6. Завдання на роботу з класами, не виконувати наслідування від
+            попередніх об'єктів! Реалізувати класи «ГрупаКлас» і «СесіяКлас»
+            з такими же методами і властивостями як і попередні об’єкти.
+            «СесіяКлас» наслідує методи та властивості від «ГрупаКлас». При
+            реалізації використовувати геттери і сеттери, наприклад, для
+            перевірки даних чи виведення в різних виглядах інформацію.
+            Продемонструвати роботу кожного завдання. У коді виділити
+            коментарями виконання кожного завдання.</p>
+    </div>
+<div id="output"></div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    // Task 1: Create an object "Faculty"
+
+const faculty = {
+    name: "Faculty of Science",
+    phone: "123-456-7890",
+  };
+  
+  // Task 2: Create an object "Group" with properties and methods
+  const group = {
+    specialty: "Computer Science",
+    course: "Bachelor's",
+    numberOfStudents: 30,
+    addData(specialty, course, numberOfStudents) {
+      this.specialty = specialty;
+      this.course = course;
+      this.numberOfStudents = numberOfStudents;
+    },
+    updateData(specialty, course, numberOfStudents) {
+      if (specialty) this.specialty = specialty;
+      if (course) this.course = course;
+      if (numberOfStudents) this.numberOfStudents = numberOfStudents;
+    },
+    deleteData() {
+      this.specialty = "";
+      this.course = "";
+      this.numberOfStudents = 0;
+    },
+  };
+  
+  // Task 3: Copy properties and methods from "Faculty" and "Group" objects
+  const facultyCopy = { ...faculty };
+  const groupCopy = { ...group };
+  
+  // Task 4: Add "showData" method to the prototype of "Group"
+  group.__proto__.showData = function () {
+    console.log(`
+      Specialty: ${this.specialty}
+      Course: ${this.course}
+      Number of Students: ${this.numberOfStudents}
+    `);
+  };
+  
+  // Task 5: Create an object "Session" that inherits from "Group" and has additional properties and methods
+  const session = Object.create(group);
+  session.expelled = 5;
+  
+  // Override the "showData" method in "Session"
+  session.showData = function () {
+    console.log(`
+      Specialty: ${this.specialty}
+      Course: ${this.course}
+      Number of Students: ${this.numberOfStudents}
+      Expelled: ${this.expelled}
+    `);
+  };
+  
+  // Task 6: Implement classes "GroupClass" and "SessionClass" with getters and setters
+  class GroupClass {
+    constructor(specialty, course, numberOfStudents) {
+      this._specialty = specialty;
+      this._course = course;
+      this._numberOfStudents = numberOfStudents;
+    }
+  
+    get specialty() {
+      return this._specialty;
+    }
+  
+    set specialty(value) {
+      this._specialty = value;
+    }
+  
+    get course() {
+      return this._course;
+    }
+  
+    set course(value) {
+      this._course = value;
+    }
+  
+    get numberOfStudents() {
+      return this._numberOfStudents;
+    }
+  
+    set numberOfStudents(value) {
+      this._numberOfStudents = value;
+    }
+  
+    showData() {
+      console.log(`
+      Specialty: ${this._specialty}
+      Course: ${this._course}
+      Number of Students: ${this._numberOfStudents}
+    `);
+    }
+  }
+  
+  class SessionClass extends GroupClass {
+    constructor(specialty, course, numberOfStudents, expelled) {
+      super(specialty, course, numberOfStudents);
+      this._expelled = expelled;
+    }
+  
+    get expelled() {
+      return this._expelled;
+    }
+  
+    set expelled(value) {
+      this._expelled = value;
+    }
+  
+    showData() {
+      console.log(`
+      Specialty: ${this._specialty}
+      Course: ${this._course}
+      Number of Students: ${this._numberOfStudents}
+      Expelled: ${this._expelled}
+    `);
+    }
+  }
+  function displayOutput(outputText) {
+            var outputDiv = document.getElementById("output");
+            outputDiv.innerHTML += "<p>" + outputText + "</p>";
+        }
+
+        // Task 1: Faculty Details
+        console.log("Task 1: Faculty Details");
+        displayOutput(JSON.stringify(faculty));
+
+        // Task 2: Group Details
+        console.log("\nTask 2: Group Details");
+        group.showData();
+        displayOutput("Task 2: " + JSON.stringify(group));
+
+        // Task 3: Copied Faculty and Group
+        console.log("\nTask 3: Copied Faculty and Group");
+        displayOutput("Task 3: Faculty Copy: " + JSON.stringify(facultyCopy));
+        displayOutput("Task 3: Group Copy: " + JSON.stringify(groupCopy));
+
+        // Task 4: Group Prototype Method
+        console.log("\nTask 4: Group Prototype Method");
+        group.showData();
+        displayOutput("Task 4: See console for Group Prototype Method output");
+
+        // Task 5: Session Details
+        console.log("\nTask 5: Session Details");
+        session.showData();
+        displayOutput("Task 5: " + JSON.stringify(session));
+
+        // Task 6: GroupClass and SessionClass
+        console.log("\nTask 6: GroupClass and SessionClass");
+        const groupClassInstance = new GroupClass("Mathematics", "Bachelor's", 40);
+        displayOutput("Task 6: GroupClass Details: " + JSON.stringify(groupClassInstance));
+
+        const sessionClassInstance = new SessionClass("Chemistry", "Master's", 30, 3);
+        displayOutput("Task 6: SessionClass Details: " + JSON.stringify(sessionClassInstance));
+  
+  
+});
+</script>
+
+</body>
+</html>
